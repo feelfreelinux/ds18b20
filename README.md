@@ -4,4 +4,4 @@ Put <b>ds18b20.c</b> and <b>ds18b20.h</b> in the same directory as your project 
 Include library with <code>#include ds18b20.h</code> <br>
 To initialize library, call <code>DS_init(GPIO);</code><br>
 To get temperature(in Celcius), call <code>DS_get_temp()</code><br>
-<a>Example code.</a>
+<a href="https://github.com/feelfreelinux/myesp32tests/blob/master/examples/ds18b20_temperature.c">For example, see this code.</a>
