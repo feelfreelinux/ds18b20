@@ -10,7 +10,7 @@
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
@@ -20,6 +20,7 @@
 
 int DS_GPIO;
 int init=0;
+/// Sends one bit to bus
 void send(char bit){
   gpio_set_direction(DS_GPIO, GPIO_MODE_OUTPUT);
   gpio_set_level(DS_GPIO,0);
@@ -28,6 +29,7 @@ void send(char bit){
   ets_delay_us(80);
   gpio_set_level(DS_GPIO,1);
 }
+// Reads one bit from bus
 unsigned char read(void){
   unsigned char PRESENCE=0;
   gpio_set_direction(DS_GPIO, GPIO_MODE_OUTPUT);
@@ -36,9 +38,10 @@ unsigned char read(void){
   gpio_set_level(DS_GPIO,1);
   ets_delay_us(15);
   gpio_set_direction(DS_GPIO, GPIO_MODE_INPUT);
-  if(gpio_get_level(DS_GPIO)==1){PRESENCE=1;}else{PRESENCE=0;}
+  if(gpio_get_level(DS_GPIO)==1) PRESENCE=1; else PRESENCE=0;
   return(PRESENCE);
 }
+// Sends one byte to bus
 void send_byte(char data){
   unsigned char i;
   unsigned char x;
@@ -49,6 +52,7 @@ void send_byte(char data){
   }
   ets_delay_us(100);
 }
+// Reads one byte from bus
 unsigned char read_byte(void){
   unsigned char i;
   unsigned char data = 0;
@@ -59,6 +63,7 @@ unsigned char read_byte(void){
   }
   return(data);
 }
+// Sends reset pulse
 unsigned char RST_PULSE(void){
   unsigned char PRESENCE;
   gpio_set_direction(DS_GPIO, GPIO_MODE_OUTPUT);
@@ -67,11 +72,12 @@ unsigned char RST_PULSE(void){
   gpio_set_level(DS_GPIO,1);
   gpio_set_direction(DS_GPIO, GPIO_MODE_INPUT);
   ets_delay_us(30);
-  if(gpio_get_level(DS_GPIO)==0){PRESENCE=1;}else{PRESENCE=0;}
+  if(gpio_get_level(DS_GPIO)==0) PRESENCE=1; else PRESENCE=0;
   ets_delay_us(470);
-  if(gpio_get_level(DS_GPIO)==1){PRESENCE=1;}else{PRESENCE=0;}
+  if(gpio_get_level(DS_GPIO)==1) PRESENCE=1; else PRESENCE=0;
   return PRESENCE;
 }
+// Returns temperature from sensor
 float DS_get_temp(void) {
   if(init==1){
     unsigned char check;
