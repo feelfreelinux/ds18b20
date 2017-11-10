@@ -15,12 +15,12 @@
 #ifndef DS18B20_H_  
 #define DS18B20_H_
 
-void send(char bit);
-unsigned char read(void);
-void send_byte(char data);
-unsigned char read_byte(void);
-unsigned char RST_PULSE(void);
-float DS_get_temp(void);
-void DS_init(int GPIO);
+void ds18b20_send(char bit);
+unsigned char ds18b20_read(void);
+void ds18b20_send_byte(char data);
+unsigned char ds18b20_read_byte(void);
+unsigned char ds18b20_RST_PULSE(void);
+float ds18b20_get_temp(void);
+void ds18b20_init(int GPIO);
 
 #endif
