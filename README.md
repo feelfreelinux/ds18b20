@@ -1,5 +1,5 @@
 # Simple library for <b>single</b> DS18B20 on ESP32
-#Usage
+# Usage
 Put <b>ds18b20.c</b> and <b>ds18b20.h</b> in the same directory as your project code. <br>
 Include library with <code>#include ds18b20.h</code> <br>
 To initialize library, call <code>ds18b20_init(GPIO);</code><br>
