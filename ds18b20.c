@@ -48,16 +48,6 @@
 #define TEMP_11_BIT 0x5F // 11 bit
 #define TEMP_12_BIT 0x7F // 12 bit
 
-// Dow-CRC using polynomial X^8 + X^5 + X^4 + X^0
-// Tiny 2x16 entry CRC table created by Arjen Lentz
-// See http://lentz.com.au/blog/calculating-crc-with-a-tiny-32-entry-lookup-table
-static const uint8_t dscrc2x16_table[] = {
-	0x00, 0x5E, 0xBC, 0xE2, 0x61, 0x3F, 0xDD, 0x83,
-	0xC2, 0x9C, 0x7E, 0x20, 0xA3, 0xFD, 0x1F, 0x41,
-	0x00, 0x9D, 0x23, 0xBE, 0x46, 0xDB, 0x65, 0xF8,
-	0x8C, 0x11, 0xAF, 0x32, 0xCA, 0x57, 0xE9, 0x74
-};
-
 uint8_t DS_GPIO;
 uint8_t init=0;
 uint8_t bitResolution=12;
@@ -297,6 +287,33 @@ float ds18b20_getTempC(const DeviceAddress *deviceAddress) {
 int16_t calculateTemperature(const DeviceAddress *deviceAddress, uint8_t* scratchPad) {
 	int16_t fpTemperature = (((int16_t) scratchPad[TEMP_MSB]) << 11) | (((int16_t) scratchPad[TEMP_LSB]) << 3);
 	return fpTemperature;
+}
+
+// Returns temperature from sensor
+float ds18b20_get_temp(void) {
+  if(init==1){
+    unsigned char check;
+    char temp1=0, temp2=0;
+      check=ds18b20_RST_PULSE();
+      if(check==1)
+      {
+        ds18b20_send_byte(0xCC);
+        ds18b20_send_byte(0x44);
+        vTaskDelay(750 / portTICK_RATE_MS);
+        check=ds18b20_RST_PULSE();
+        ds18b20_send_byte(0xCC);
+        ds18b20_send_byte(0xBE);
+        temp1=ds18b20_read_byte();
+        temp2=ds18b20_read_byte();
+        check=ds18b20_RST_PULSE();
+        float temp=0;
+        temp=(float)(temp1+(temp2*256))/16;
+        return temp;
+      }
+      else{return 0;}
+
+  }
+  else{return 0;}
 }
 
 void ds18b20_init(int GPIO) {
