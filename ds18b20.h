@@ -12,6 +12,8 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+#include <esp_system.h>
+
 #ifndef DS18B20_H_  
 #define DS18B20_H_
 
