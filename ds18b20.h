@@ -39,6 +39,12 @@ static const uint8_t dscrc2x16_table[] = {
 	0x8C, 0x11, 0xAF, 0x32, 0xCA, 0x57, 0xE9, 0x74
 };
 
+/* *INDENT-OFF* */
+#ifdef __cplusplus
+    extern "C" {
+#endif
+/* *INDENT-ON* */
+
 void ds18b20_init(int GPIO);
 
 #define ds18b20_send ds18b20_write
@@ -69,5 +75,11 @@ float ds18b20_get_temp(void);
 
 void reset_search();
 bool search(uint8_t *newAddr, bool search_mode);
+
+/* *INDENT-OFF* */
+#ifdef __cplusplus
+    }
+#endif
+/* *INDENT-ON* */
 
 #endif
