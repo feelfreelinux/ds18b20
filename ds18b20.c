@@ -274,7 +274,7 @@ float ds18b20_getTempC(const DeviceAddress *deviceAddress) {
 	if (ds18b20_isConnected(deviceAddress, scratchPad)){
 		int16_t rawTemp = calculateTemperature(deviceAddress, scratchPad);
 		if (rawTemp <= DEVICE_DISCONNECTED_RAW)
-			return DEVICE_DISCONNECTED_F;
+			return DEVICE_DISCONNECTED_C;
 		// C = RAW/128
 		// F = (C*1.8)+32 = (RAW/128*1.8)+32 = (RAW*0.0140625)+32
 		return (float) rawTemp/128.0f;
